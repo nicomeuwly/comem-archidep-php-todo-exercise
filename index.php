@@ -60,7 +60,7 @@ if (isset($_POST['action'])) {
 
       $id = $_POST['id'];
       if(is_numeric($id)) {
-        $deleteQuery = ''; // IMPLEMENT ME
+        $deleteQuery = 'DELETE FROM todo WHERE `todo`.`id` = ' . $id; // IMPLEMENT ME
         if(!$db->query($deleteQuery)) {
           die(print_r($db->errorInfo(), true));
         }
@@ -135,7 +135,7 @@ $items = $db->query($selectQuery);
             <div class='title'><?= $item['title'] ?></div>
 
             <!-- Todo item controls -->
-            <form action='<?= BASE_URL ?>' method='post'>
+            <form action='index.php' method='post'>
               <input type='hidden' name='id' value='<?= $item['id'] ?>' />
 
               <div class='btn-group btn-group-sm'>
