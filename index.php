@@ -33,7 +33,7 @@ if (isset($_POST['action'])) {
         }
       }
 
-      header('Location: '.BASE_URL);
+      header('Location: index.php');
       die();
 
     /**
@@ -50,7 +50,7 @@ if (isset($_POST['action'])) {
         }
       }
 
-      header('Location: '.BASE_URL);
+      header('Location: index.php');
       die();
 
     /**
@@ -66,7 +66,7 @@ if (isset($_POST['action'])) {
         }
       }
 
-      header('Location: '.BASE_URL);
+      header('Location: index.php');
       die();
 
     default:
@@ -114,7 +114,7 @@ $items = $db->query($selectQuery);
     <main role="main" class='offset-3 col-6 mt-3'>
 
       <!-- Todo item creation form -->
-      <form action='<?= BASE_URL ?>' method='post' class='form-inline justify-content-center'>
+      <form action='index.php' method='post' class='form-inline justify-content-center'>
         <input type='hidden' name='action' value='new' />
 
         <div class='form-group'>
