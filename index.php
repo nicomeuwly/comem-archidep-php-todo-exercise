@@ -5,7 +5,7 @@
 // "http://localhost:8888/comem-archidep-php-todo-exercise/", then BASE_URL
 // should be "/comem-archidep-php-todo-exercise/". If you are accessing the
 // application at "http://localhost:8888", then BASE_URL should be "/".
-define('BASE_URL', '/');
+define('BASE_URL', 'index.php');
 
 // Database connection parameters.
 define('DB_USER', 'todolist');
@@ -33,7 +33,7 @@ if (isset($_POST['action'])) {
         }
       }
 
-      header('Location: index.php');
+      header('Location: ' .BASE_URL);
       die();
 
     /**
@@ -44,13 +44,25 @@ if (isset($_POST['action'])) {
 
       $id = $_POST['id'];
       if(is_numeric($id)) {
-        $updateQuery = ''; // IMPLEMENT ME
+        
+        $selectQuery = 'SELECT done FROM todo WHERE `todo`.`id` = ' . $id; 
+        $item = $db->query($selectQuery);
+        $item = $item -> fetchAll();
+
+        if ($item['0']['done']) {
+          $value = 0;
+        } else {
+          $value = 1;
+        }
+
+        $updateQuery = 'UPDATE `todo` SET `done` = '.$value.' WHERE `todo`.`id` = ' . $id; // IMPLEMENT ME
+        echo $updateQuery;
         if(!$db->query($updateQuery)) {
           die(print_r($db->errorInfo(), true));
         }
       }
 
-      header('Location: index.php');
+      header('Location: ' .BASE_URL);
       die();
 
     /**
@@ -66,7 +78,7 @@ if (isset($_POST['action'])) {
         }
       }
 
-      header('Location: index.php');
+      header('Location: ' .BASE_URL);
       die();
 
     default:
@@ -114,7 +126,7 @@ $items = $db->query($selectQuery);
     <main role="main" class='offset-3 col-6 mt-3'>
 
       <!-- Todo item creation form -->
-      <form action='index.php' method='post' class='form-inline justify-content-center'>
+      <form action='<?php BASE_URL ?>' method='post' class='form-inline justify-content-center'>
         <input type='hidden' name='action' value='new' />
 
         <div class='form-group'>
@@ -135,7 +147,7 @@ $items = $db->query($selectQuery);
             <div class='title'><?= $item['title'] ?></div>
 
             <!-- Todo item controls -->
-            <form action='index.php' method='post'>
+            <form action='<?php BASE_URL ?>' method='post'>
               <input type='hidden' name='id' value='<?= $item['id'] ?>' />
 
               <div class='btn-group btn-group-sm'>
