@@ -44,18 +44,22 @@ if (isset($_POST['action'])) {
 
       $id = $_POST['id'];
       if(is_numeric($id)) {
-        
+        /**
+         * Select current item status
+         */
         $selectQuery = 'SELECT done FROM todo WHERE `todo`.`id` = ' . $id; 
         $item = $db->query($selectQuery);
         $item = $item -> fetchAll();
-
+        /**
+         * Status inversion
+         */  
         if ($item['0']['done']) {
           $value = 0;
         } else {
           $value = 1;
         }
 
-        $updateQuery = 'UPDATE `todo` SET `done` = '.$value.' WHERE `todo`.`id` = ' . $id; // IMPLEMENT ME
+        $updateQuery = 'UPDATE `todo` SET `done` = '.$value.' WHERE `todo`.`id` = ' . $id;
         echo $updateQuery;
         if(!$db->query($updateQuery)) {
           die(print_r($db->errorInfo(), true));
@@ -72,7 +76,7 @@ if (isset($_POST['action'])) {
 
       $id = $_POST['id'];
       if(is_numeric($id)) {
-        $deleteQuery = 'DELETE FROM todo WHERE `todo`.`id` = ' . $id; // IMPLEMENT ME
+        $deleteQuery = 'DELETE FROM todo WHERE `todo`.`id` = ' . $id;
         if(!$db->query($deleteQuery)) {
           die(print_r($db->errorInfo(), true));
         }
@@ -89,7 +93,7 @@ if (isset($_POST['action'])) {
 /**
  * Select all tasks from the database.
  */
-$selectQuery = 'SELECT * FROM todo'; // IMPLEMENT ME
+$selectQuery = 'SELECT * FROM todo';
 $items = $db->query($selectQuery);
 ?>
 
